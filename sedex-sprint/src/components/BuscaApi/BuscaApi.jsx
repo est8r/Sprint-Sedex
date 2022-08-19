@@ -1,9 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
-import Input from '../Input/Input.jsx';
+import Input from '../Input/Input';
+import Button from '../Button/Button';
+import Card from '../Card/Card';
+import Label from '../Label/Label';
+
 
 const BuscaApi = () => {
-  const [valueInput, setValueInput] = useState();
+  const [card, setNewCard]=useState("")
+  const [historico, setHistorico]=useState([])
+  
+  // const [valueInput, setValueInput] = useState();
   const [cep, setCEP] = useState();
   const handleSetValue = (e) => {
     setCEP(e.target.value);
@@ -11,10 +18,13 @@ const BuscaApi = () => {
   const handleRequisicao = async () => {
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
     const json = await response.json();
-    setValueInput(json);
+    setNewCard(json);
+    setHistorico([...historico,json]);
   };
+  
   return (
     <div>
+      <Label texto="Digite um cep:"/>
       <Input
         defaultValue={cep}
         type="text"
@@ -22,12 +32,29 @@ const BuscaApi = () => {
         onChange={handleSetValue}
       />
 
-      <button onClick={handleRequisicao}>Buscar</button>
-      <p>CEP: {valueInput ? valueInput.cep : 'carregando'}</p>
-      <p>Logradouro: {valueInput ? valueInput.logradouro : 'carregando'}</p>
-      <p>Bairro: {valueInput ? valueInput.bairro : 'carregando'}</p>
-      <p>Cidade: {valueInput ? valueInput.localidade : 'carregando'}</p>
-      <p>UF: {valueInput ? valueInput.uf : 'carregando'}</p>
+      <Button onClick={handleRequisicao} />
+      {card?(
+        <Card
+        cep={card.cep}
+        uf={card.uf}
+        rua={card.logradouro}
+        cidade={card.localidade}
+        bairro={card.bairro}
+        
+        />
+      ): ''}
+      {historico?
+            historico.map((item)=>(
+               <Card
+               cep={item.cep}
+               uf={item.uf}
+               rua={item.logradouro}
+                cidade={item.localidade}
+              bairro={item.bairro}
+              />
+              )): ''
+        }
+   
     </div>
   );
 };
