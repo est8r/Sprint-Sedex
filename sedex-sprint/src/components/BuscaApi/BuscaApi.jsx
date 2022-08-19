@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Input from '../Input/Input';
 import Button from '../Button/Button';
 import Card from '../Card/Card';
 import Label from '../Label/Label';
@@ -25,7 +24,7 @@ const BuscaApi = () => {
   return (
     <div>
       <Label texto="Digite um cep:"/>
-      <Input
+      <input
         defaultValue={cep}
         type="text"
         placeholder="Digite um CEP"
