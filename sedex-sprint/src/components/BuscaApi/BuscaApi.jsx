@@ -15,14 +15,19 @@ const BuscaApi = () => {
   };
   return (
     <div>
-      <Input />
+      <Input
+        defaultValue={cep}
+        type="text"
+        placeholder="Digite um CEP"
+        onChange={handleSetValue}
+      />
 
-      <button>Buscar</button>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
+      <button onClick={handleRequisicao}>Buscar</button>
+      <p>CEP: {valueInput ? valueInput.cep : 'carregando'}</p>
+      <p>Logradouro: {valueInput ? valueInput.logradouro : 'carregando'}</p>
+      <p>Bairro: {valueInput ? valueInput.bairro : 'carregando'}</p>
+      <p>Cidade: {valueInput ? valueInput.localidade : 'carregando'}</p>
+      <p>UF: {valueInput ? valueInput.uf : 'carregando'}</p>
     </div>
   );
 };
